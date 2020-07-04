@@ -1,0 +1,9 @@
+<div class="card-group">
+  <div class="card" *ngFor="let usuario of usuarios | async">
+    <img [src]="usuario.avatar" class="card-img-top" alt="avatar">
+    <div class="card-body">
+      <h5 class="card-title">{{ usuario.id }} - {{ usuario.first_name }} {{ usuario.last_name }}</h5>
+      <p class="card-text"><small class="text-muted">{{ usuario.email }}</small></p>
+    </div>
+  </div>
+</div>
