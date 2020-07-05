@@ -1,3 +1,4 @@
+import { cargarUsuario } from './../../store/actions/usuario.actions';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -17,7 +18,6 @@ export class NavbarComponent implements OnInit {
   }
 
   public buscarUsuario(idUsuario: string): void {
-    console.log('idUsuario:', idUsuario);
     if (!!idUsuario) {
       this.router.navigate(['/usuario', idUsuario]);
     }

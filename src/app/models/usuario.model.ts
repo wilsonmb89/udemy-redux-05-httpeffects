@@ -25,10 +25,3 @@ export interface GetUserRes {
   data: Usuario;
   ad: Ad;
 }
-
-interface Ad {
-  company: string;
-  url: string;
-  text: string;
-}
-

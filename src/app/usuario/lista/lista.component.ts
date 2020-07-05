@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/app.reducer';
+import { cargarUsuarios } from 'src/app/store/actions/usuarios.actions';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lista',
@@ -10,16 +12,30 @@ import { Observable } from 'rxjs';
   styles: [
   ]
 })
-export class ListaComponent implements OnInit {
+export class ListaComponent implements OnInit, OnDestroy {
 
-  usuarios: Observable<Usuario[]>;
+  usuarios: Usuario[];
+  loading: boolean;
+  error: any;
+  usuariosSubscription: Subscription;
 
   constructor(
-    private usuarioService: UsuarioService
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
-    this.usuarios = this.usuarioService.getUsers().pipe(map(result => result.data));
+    this.loading = false;
+    this.store.dispatch(cargarUsuarios());
+    this.usuariosSubscription = this.store.select('usersStore').subscribe(
+      resData => {
+        this.usuarios = resData.users;
+        this.loading = resData.loading;
+        this.error = resData.error;
+      }
+    );
   }
 
+  ngOnDestroy(): void {
+    this.usuariosSubscription.unsubscribe();
+  }
 }

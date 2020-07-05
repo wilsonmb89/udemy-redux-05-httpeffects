@@ -21,11 +21,11 @@ export class UsuarioService {
 
   public getUsers(page?: number): Observable<GetUsersRes> {
     page = !!page ? page : 1;
-    const getUsersURL = `${this.usuarioURL}/users/?page=${page}&per_page=4`;
+    const getUsersURL = `${this.usuarioURL}/users/?page=${page}&per_page=4&delay=2`;
     return this.get<GetUsersRes>(getUsersURL).pipe();
   }
 
-  public getUser(userId: number): Observable<GetUserRes> {
+  public getUser(userId: string): Observable<GetUserRes> {
     const getUserURL = `${this.usuarioURL}/users/${userId}`;
     return this.get<GetUserRes>(getUserURL);
   }
