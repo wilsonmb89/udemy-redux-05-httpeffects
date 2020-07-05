@@ -17,7 +17,7 @@ export class UsuarioEffect {
     () => this.actions$.pipe(
       ofType(usuarioActions.cargarUsuario),
       mergeMap(
-        resAct => this.usuarioService.getUser(resAct.idUsuario).pipe(
+        action => this.usuarioService.getUser(action.idUsuario).pipe(
           map(resUser => usuarioActions.cargarUsuarioSuccess({ usuario: resUser.data })),
           catchError(err => of(usuarioActions.cargarUsuarioError({ payload: err })))
         )
